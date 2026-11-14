@@ -25,9 +25,12 @@ private :
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         ll n = graph.size();
+        vll vis(n,-1);
         for(ll i = 0; i<n; i++){
-            vll vis(n,-1);
-            if(!check(i, graph, vis)) return false;
+            if(vis[i]==-1){
+                if(!check(i, graph, vis)) return false;
+            }
+            
         }
         return true;
         
