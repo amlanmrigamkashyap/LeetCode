@@ -1,38 +1,29 @@
 class Solution {
-    using ll = long long;
+    using ll = int;
     typedef vector<ll> vll;
-private :
-    bool check(ll n, vector<vector<int>>& graph, vll &vis){
-        queue<ll> q;
-        q.push(n);
-        vis[n] = 1;
-        while(!q.empty()){
-            ll t = q.front();
-            q.pop();
-            for(auto &x : graph[t]){
-                if(vis[x] == -1){
-                    q.push(x);
-                    vis[x] = !vis[t];
-                }
-                else if(vis[x] == vis[t]){
-                    return false;
-                }
-            }
-        }
-        return true;
+    typedef vector<vll> vvll;
 
+private:
+    bool dfs(ll n, ll color, vvll &graph, vll &vis){
+        cout<< n << " ";
+        vis[n] = color;
+        for(auto &x : graph[n]){
+            if(vis[x] == -1 && !dfs(x, !color, graph, vis)) return false;
+            else if(vis[x] == color) return false;
+        }
+        cout<< n << "done ";
+        return true;
     }
 public:
     bool isBipartite(vector<vector<int>>& graph) {
         ll n = graph.size();
         vll vis(n,-1);
         for(ll i = 0; i<n; i++){
-            if(vis[i]==-1){
-                if(!check(i, graph, vis)) return false;
+            if(vis[i] == -1 && !dfs(i, 0, graph, vis)){
+                return false;
             }
-            
         }
-        return true;
         
+        return true;
     }
 };
